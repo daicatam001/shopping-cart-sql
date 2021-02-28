@@ -1,0 +1,29 @@
+<%- include('./partials/header',{title:title}) %>
+
+
+    <h1 class="mt-3">
+        <%= title %>
+    </h1>
+
+    <div class="row">
+        <% products.forEach(function(product){ %>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <%= product.title %>
+                        </h5>
+                        <div class="card-text">
+                            <%= product.description %>
+                        </div>
+                        <h5 class="card-text">
+                            <%= product.price %>
+                        </h5>
+                        <a href="#" class="btn btn-danger">Xóa</a>
+                        <a href="#" class="btn btn-primary">Mua</a>
+                    </div>
+                </div>
+            </div>
+            <% }); %>
+    </div>
+    <%- include('./partials/footer') %>
