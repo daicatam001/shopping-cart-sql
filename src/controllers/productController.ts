@@ -28,6 +28,7 @@ export const insertProduct = async (req: Request, res: Response) => {
   try {
     const { title, description, price } = req.body;
     const product = await Product.create({ title, description, price });
+    console.log(product.title);
     res.redirect('/');
   } catch (e) {
     throw e;

@@ -1,24 +1,37 @@
-import sequelize from '../utils/database';
-import { Sequelize, DataTypes, literal } from 'sequelize';
+import { DataTypes, Model } from "sequelize";
+import sequelize from "../utils/database";
 
-const Product = sequelize.define('Product', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true,
+class Product extends Model {
+  id!:string;
+  title!:string;
+  description!:string;
+  price!:string;
+}
+
+Product.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    price: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   },
-  title: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  description: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  price: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
-});
+  {
+    tableName: "products",
+    sequelize,
+  }
+);
 
 export default Product;

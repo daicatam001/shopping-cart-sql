@@ -1,25 +1,44 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import path from 'path';
-import pageRoutes from './routes';
-import sequelize from './utils/database';
-import './models';
+import bodyParser from "body-parser";
+import express, { NextFunction, Request, Response } from "express";
+import path from "path";
+import "./models";
+import { AuthRequest } from "./types/request";
+import User from "./models/user";
+import pageRoutes from "./routes";
+import sequelize from "./utils/database";
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
-app.use('', pageRoutes);
+app.use(async (req: Request,res:Response, next: NextFunction) => {
+  const [user] = await User.findOrCreate({
+    where: {
+      username: "tampt",
+      password: "123456",
+    },
+  });
+  const cart = await user.getCart();
+  console.log("cart", cart);
+  if (!cart) {
+    await user.createCart();
+  }
+  console.log(user);
+  // req.user = user;
+  next();
+});
 
-// sequelize.sync({ force: true }).then(() => {
-//   console.log('sync db success');
-// });
+app.use("", pageRoutes);
+
+sequelize.sync({ alter: true }).then(() => {
+  console.log("sync db success");
+});
 sequelize
   .authenticate()
   .then(() => {
-    console.log('connection success');
-    app.listen(3000, () => console.log('server is running on port: ', 3000));
+    console.log("connection success");
+    app.listen(4000, () => console.log("server is running on port: ", 4000));
   })
   .catch((e) => {
     console.log(e);
