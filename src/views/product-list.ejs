@@ -20,7 +20,10 @@
                             <%= product.price %>
                         </h5>
                         <a href="#" class="btn btn-danger">Xóa</a>
-                        <a href="#" class="btn btn-primary">Mua</a>
+                        <form class="d-inline" action="/cart" method="post">
+                            <input type="hidden" name="productId" value="<%= product.id  %> " >
+                            <button class="btn btn-primary">Mua</button>
+                        </form>
                     </div>
                 </div>
             </div>

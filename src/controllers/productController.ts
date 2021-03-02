@@ -4,7 +4,6 @@ import Product from '../models/product';
 export const showProducts = async (req: Request, res: Response) => {
   try {
     const products = await Product.findAll();
-    console.log(products);
     res.render('product-list', {
       title: 'Product List',
       products,

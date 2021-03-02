@@ -6,6 +6,7 @@ class User extends Model {
   id!: number;
   username!: string;
   password!: string;
+  cart!:Cart;
 
   public getCart!:HasOneGetAssociationMixin<Cart>;
   public createCart!:HasOneCreateAssociationMixin<Cart>

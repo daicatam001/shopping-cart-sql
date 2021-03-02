@@ -1,9 +1,13 @@
-import Product from './product';
-import Cart from './cart';
-import User from './user';
+import Product from "./product";
+import CartItem from "./cart-item";
+import Cart from "./cart";
+import User from "./user";
 
-
-User.hasOne(Cart,{
-    onDelete:'CASCADE'
-})
-Cart.belongsTo(User); 
+User.hasOne(Cart, {
+  onDelete: "CASCADE",
+  as: 'cart'
+  
+});
+Cart.belongsTo(User,{foreignKey:'userId'});
+Cart.belongsToMany(Product, { through: CartItem });
+Product.belongsToMany(Cart, { through: CartItem });

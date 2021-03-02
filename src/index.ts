@@ -1,10 +1,11 @@
 import bodyParser from "body-parser";
-import express, { NextFunction, Request, Response } from "express";
+import express, { NextFunction, Response } from "express";
 import path from "path";
 import "./models";
-import { AuthRequest } from "./types/request";
+import Cart from "./models/cart";
 import User from "./models/user";
 import pageRoutes from "./routes";
+import { AuthReuqest } from "./types/request";
 import sequelize from "./utils/database";
 const app = express();
 
@@ -12,26 +13,28 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-app.use(async (req: Request,res:Response, next: NextFunction) => {
-  const [user] = await User.findOrCreate({
-    where: {
-      username: "tampt",
-      password: "123456",
-    },
-  });
-  const cart = await user.getCart();
-  console.log("cart", cart);
-  if (!cart) {
-    await user.createCart();
+app.use(
+  "/",
+  // requestHandler(
+  async (req: AuthReuqest, res: Response, next: NextFunction) => {
+    const [user] = await User.findOrCreate({
+      where: {
+        username: "tampt",
+        password: "123456",
+      },
+      include: 'cart',
+    });
+    if (user) {
+      req.user = user;
+    }
+    next();
   }
-  console.log(user);
-  // req.user = user;
-  next();
-});
+  // )
+);
 
 app.use("", pageRoutes);
 
-sequelize.sync({ alter: true }).then(() => {
+sequelize.sync({ force: true }).then(() => {
   console.log("sync db success");
 });
 sequelize
