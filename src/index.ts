@@ -22,7 +22,6 @@ app.use(
         username: "tampt",
         password: "123456",
       },
-      include: 'cart',
     });
     if (user) {
       req.user = user;
@@ -34,7 +33,7 @@ app.use(
 
 app.use("", pageRoutes);
 
-sequelize.sync({ alter: true }).then(() => {
+sequelize.sync({ force: true }).then(() => {
   console.log("sync db success");
 });
 sequelize

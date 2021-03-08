@@ -20,7 +20,8 @@ CartItem.init(
     },
   },
   {
-    tableName: "cart-item",
+    tableName: "cart_item",
+    modelName: "cartItem",
     sequelize,
   }
 );

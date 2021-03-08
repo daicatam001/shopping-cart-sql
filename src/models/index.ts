@@ -4,9 +4,13 @@ import Cart from "./cart";
 import User from "./user";
 
 User.hasOne(Cart, {
-  onDelete: "CASCADE",
-  as: "cart",
+  foreignKey: "userId",
 });
-Cart.belongsTo(User, { foreignKey: "userId" });
-Cart.belongsToMany(Product, { through: "cart-item", foreignKey: "cartId" });
-Product.belongsToMany(Cart, { through: "cart-item", foreignKey: "productId" });
+Cart.belongsToMany(Product, {
+  through: CartItem,
+  foreignKey: "cartId",
+});
+Product.belongsToMany(Cart, {
+  through: CartItem,
+  foreignKey: "productId",
+});

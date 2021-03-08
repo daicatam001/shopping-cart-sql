@@ -3,9 +3,9 @@ import sequelize from "../utils/database";
 
 class Product extends Model {
   id!:string;
-  title!:string;
-  description!:string;
-  price!:string;
+  title?:string;
+  description?:string;
+  price?:string;
 }
 
 Product.init(
