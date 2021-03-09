@@ -1,7 +1,10 @@
 import {
   BelongsToManyAddAssociationMixin,
+  BelongsToManyAddAssociationsMixin,
   BelongsToManyCreateAssociationMixin,
   BelongsToManyGetAssociationsMixin,
+  BelongsToManyRemoveAssociationMixin,
+  BelongsToManySetAssociationsMixin,
   DataTypes,
   Model,
 } from "sequelize";
@@ -13,12 +16,26 @@ class Cart extends Model {
   id!: string;
   total!: number;
   cartItem!: any;
+  products?: Product[];
+
   createProduct!: BelongsToManyCreateAssociationMixin<Product>;
   addProduct!: BelongsToManyAddAssociationMixin<
     Product,
     { throught: CartItem }
   >;
+  addProducts!: BelongsToManyAddAssociationsMixin<
+    Product,
+    { throught: CartItem }
+  >;
+  setProducts!: BelongsToManySetAssociationsMixin<
+    Product ,
+    { throught: CartItem }
+  >;
   getProducts!: BelongsToManyGetAssociationsMixin<Product>;
+  removeProduct!: BelongsToManyRemoveAssociationMixin<
+    Product,
+    { throught: CartItem }
+  >;
 }
 
 Cart.init(
@@ -36,6 +53,7 @@ Cart.init(
   },
   {
     tableName: "carts",
+    modelName: "cart",
     sequelize,
   }
 );

@@ -1,11 +1,15 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../utils/database";
+import CartItem from "./cart-item";
+import OrderItem from "./order-item";
 
 class Product extends Model {
-  id!:string;
-  title?:string;
-  description?:string;
-  price?:string;
+  id!: string;
+  title!: string;
+  description!: string;
+  price!: number;
+  cartItem?: CartItem;
+  orderItem?: OrderItem;
 }
 
 Product.init(
@@ -30,6 +34,7 @@ Product.init(
   },
   {
     tableName: "products",
+    modelName: "product",
     sequelize,
   }
 );

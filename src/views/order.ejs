@@ -13,26 +13,16 @@
                           <%= product.title %>
                         </h5>
                         <h5 class="card-text">
-                            <%= product.price %>
+                            <%= product.orderItem.price %>
                         </h5>
 
                         <h5 class="card-text">
-                           Số lượng <%= product.cartItem.amount %>
+                           Số lượng <%= product.orderItem.amount %>
                         </h5>
-                        <form class="d-inline" action="cart/delete" method="post">
-                            <input type="hidden" name="productId" value="<%= product.id  %> " >
-                            <button class="btn btn-danger">Xóa</button>
-                        </form>
-                        
                     </div>
                 </div>
             </div>
             <% }); %>
-    </div>
-    <div class="text-center">
-        <form action="/order" method="POST">
-            <button class="btn btn-primary">Order now</button>
-        </form>
     </div>
 
     <%- include('./partials/footer') %>

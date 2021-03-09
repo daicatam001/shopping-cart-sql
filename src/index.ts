@@ -33,7 +33,7 @@ app.use(
 
 app.use("", pageRoutes);
 
-sequelize.sync({ force: true }).then(() => {
+sequelize.sync({ alter: true }).then(() => {
   console.log("sync db success");
 });
 sequelize
